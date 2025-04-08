@@ -132,7 +132,7 @@ function resetGame() {
     pokemonsContainer.innerHTML = '';
     score = 0;
     level = 1;
-    spawnInterval = 1000;
+    spawnInterval = 500;
     scoreElement.textContent = score;
     levelElement.textContent = level;
     timerElement.textContent = '--';
