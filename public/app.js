@@ -125,20 +125,30 @@ function showGameOver() {
     gameOverScreen.style.display = 'block';
 }
 
-function resetGame() {
-    gameStarted = false;
-    clearInterval(gameInterval);
-    clearInterval(timerInterval);
-    pokemonsContainer.innerHTML = '';
-    score = 0;
-    level = 1;
-    spawnInterval = 500;
-    scoreElement.textContent = score;
-    levelElement.textContent = level;
-    timerElement.textContent = '--';
-    gameOverScreen.style.display = 'none';
-    startButton.textContent = 'Start Game';
+function startGame() {
+    if (!gameStarted) {
+        gameStarted = true;
+        score = 0;
+        level = 1;
+        spawnInterval = 1000;
+        scoreElement.textContent = score;
+        levelElement.textContent = level;
+        timerElement.textContent = '--';
+        startButton.textContent = 'Stop Game';
+        pokemonsContainer.innerHTML = '';
+        gameOverScreen.style.display = 'none';
+
+        // 🆕 Generate 6 Pokémon at the start
+        for (let i = 0; i < 6; i++) {
+            generateRandomPokemon();
+        }
+
+        startGameInterval();
+    } else {
+        resetGame();
+    }
 }
+
 
 function startGameInterval() {
     gameInterval = setInterval(generateRandomPokemon, spawnInterval);
