@@ -46,6 +46,12 @@ function startGame() {
         startButton.textContent = 'Stop Game';
         pokemonsContainer.innerHTML = '';
         gameOverScreen.style.display = 'none';
+
+        // Generate 6 Pokémon at the start
+        for (let i = 0; i < 6; i++) {
+            generateRandomPokemon();
+        }
+
         startGameInterval();
     } else {
         resetGame();
@@ -89,19 +95,17 @@ function catchPokemon(e) {
     score += points;
     scoreElement.textContent = score;
 
-   if (score >= level * 10) {
-    level++;
-    levelElement.textContent = level;
-    spawnInterval = Math.max(300, spawnInterval - 100);
-    clearInterval(gameInterval);
-    startGameInterval();
+    if (score >= level * 10) {
+        level++;
+        levelElement.textContent = level;
+        spawnInterval = Math.max(300, spawnInterval - 100);
+        clearInterval(gameInterval);
+        startGameInterval();
 
-    // 🆕 Add 3 new Pokémon on level up
-    for (let i = 0; i < 3; i++) {
-        generateRandomPokemon();
-    }
-}
-
+        // Add 3 new Pokémon on level up
+        for (let i = 0; i < 3; i++) {
+            generateRandomPokemon();
+        }
     }
 
     if (score >= 10 && !timerInterval) {
@@ -132,34 +136,10 @@ function showGameOver() {
     gameOverScreen.style.display = 'block';
 }
 
-function startGame() {
-    if (!gameStarted) {
-        gameStarted = true;
-        score = 0;
-        level = 1;
-        spawnInterval = 1000;
-        scoreElement.textContent = score;
-        levelElement.textContent = level;
-        timerElement.textContent = '--';
-        startButton.textContent = 'Stop Game';
-        pokemonsContainer.innerHTML = '';
-        gameOverScreen.style.display = 'none';
-
-        // 🆕 Generate 6 Pokémon at the start
-        for (let i = 0; i < 6; i++) {
-            generateRandomPokemon();
-        }
-
-        startGameInterval();
-    } else {
-        resetGame();
-    }
-}
-
-
 function startGameInterval() {
     gameInterval = setInterval(generateRandomPokemon, spawnInterval);
 }
+
 function resetGame() {
     gameStarted = false;
     clearInterval(gameInterval);
