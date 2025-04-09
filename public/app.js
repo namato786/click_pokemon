@@ -89,12 +89,19 @@ function catchPokemon(e) {
     score += points;
     scoreElement.textContent = score;
 
-    if (score >= level * 10) {
-        level++;
-        levelElement.textContent = level;
-        spawnInterval = Math.max(300, spawnInterval - 100);
-        clearInterval(gameInterval);
-        startGameInterval();
+   if (score >= level * 10) {
+    level++;
+    levelElement.textContent = level;
+    spawnInterval = Math.max(300, spawnInterval - 100);
+    clearInterval(gameInterval);
+    startGameInterval();
+
+    // 🆕 Add 3 new Pokémon on level up
+    for (let i = 0; i < 3; i++) {
+        generateRandomPokemon();
+    }
+}
+
     }
 
     if (score >= 10 && !timerInterval) {
@@ -152,6 +159,16 @@ function startGame() {
 
 function startGameInterval() {
     gameInterval = setInterval(generateRandomPokemon, spawnInterval);
+}
+function resetGame() {
+    gameStarted = false;
+    clearInterval(gameInterval);
+    clearInterval(timerInterval);
+    pokemonsContainer.innerHTML = '';
+    finalScoreElement.textContent = score;
+    startButton.textContent = 'Start Game';
+    timerElement.textContent = '--';
+    gameOverScreen.style.display = 'block';
 }
 
 startButton.addEventListener('click', startGame);
